@@ -32,7 +32,7 @@ public class BaseController {
     }
     @GetMapping("/h3")
     ResponseEntity<String> hello3() {
-        return new ResponseEntity<>("Hello World3!", HttpStatus.BAD_GATEWAY);
+        return new ResponseEntity<>("Hello World3!", HttpStatus.OK);
     }
     @GetMapping("/admin")
     ResponseEntity<String> helloAdmin() {
