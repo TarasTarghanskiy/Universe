@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <title>Discusio</title>
+    <link rel='stylesheet' href="../static/css/publications.css" th:href="@{/css/publications.css}">
+</head>
+<body>
+
+<nav class="top-menu">
+    <ul class="menu-main">
+        <li><a th:href="@{/}">Головна</a></li>
+        <li><a th:href="@{/profile}">Профіль</a></li>
+        <li><a th:href="@{/pub/page?page=0&size=10&sort=id}">Публікації</a></li>
+        <li><a th:href="@{/terms}">Терміни</a></li>
+        <li><a th:href="@{/laws}">Закони</a></li>
+        <li><a th:href="@{/votes}">Голосування</a></li>
+    </ul>
+    <a class="navbar-logo" href=""><img src="https://html5book.ru/wp-content/uploads/2017/04/lily-logo.png"></a>
+</nav>
+
+<nav class="top-menu">
+    <p th:text="${pub.id}"> id </p>
+    <p th:text="${pub.name}"> Name </p>
+    <p th:text="${pub.text}"> Text </p>
+</nav>
+
+<nav class="top-menu">
+    <table>
+        <thead>
+        <tr>
+            <th> ID </th>
+            <th> Text </th>
+            <th> Перейти </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${comments.empty}">
+            <td colspan="2"> No publications available </td>
+        </tr>
+        <tr th:each="comment : ${comments}">
+            <td><span th:text="${comment.id}"> id </span></td>
+            <td><span th:text="${comment.text}"> Text </span></td>
+            <td><span><a th:href="@{/}"> Перейти </a></span></td>
+        </tr>
+        </tbody>
+    </table>
+</nav>
+
+</body>
+</html>

@@ -5,10 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import universe.entity.enums.Role;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -18,7 +15,10 @@ public class UserDTO {
     private long id;
     private String username;
     private String name;
+    private int rating;
     private String password;
     private boolean enable;
     private Set<Role> roles;
+    private List<PublicationDTO> publicationEntityList;
+    private List<CommentDTO> commentEntityList;
 }

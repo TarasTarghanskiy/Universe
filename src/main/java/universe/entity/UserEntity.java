@@ -7,7 +7,9 @@ import lombok.Setter;
 import universe.entity.enums.Role;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -41,4 +43,10 @@ public class UserEntity {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "userEntity")
+    private List<PublicationEntity> publicationEntityList = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "userEntityLikes")
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
 }

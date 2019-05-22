@@ -1,28 +1,18 @@
 package universe.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import universe.dto.UserDTO;
-import universe.service.UserService;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserService userService;
 
     @Autowired
     DataSource dataSource;
@@ -31,16 +21,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/create", "h2", "/allusers").permitAll()
+                    .antMatchers("/", "/css/**", "/home/",
+                            "/publications", "/terms", "/publications",
+                            "/laws", "/votes", "/create", "/test/**").permitAll()
+                    .antMatchers("/admin/**").hasAuthority("ADMIN")
+                    .antMatchers("/user/**").hasAuthority("USER")
                     .anyRequest().authenticated()
-                .and()
-                    .authorizeRequests()
-                    .antMatchers("/admin/**", "/h3").hasRole("ADMIN")
-                    .antMatchers("/user/**").hasRole("USER")
                 .and()
                     .formLogin()
                     .loginPage("/login")
                     .permitAll()
+                .and()
+                    .exceptionHandling().accessDeniedPage("/hello")
                 .and()
                     .logout()
                     .permitAll();

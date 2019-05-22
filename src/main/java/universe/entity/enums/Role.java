@@ -1,5 +1,5 @@
 package universe.entity.enums;
 
 public enum Role {
-    USER;
+    USER, ADMIN
 }
